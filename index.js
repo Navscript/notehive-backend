@@ -1,3 +1,4 @@
+const resourceRoutes = require("./routes/resourceRoutes");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -15,6 +16,8 @@ app.use(express.json());
 // routes
 app.use("/rooms", roomRoutes);
 app.use("/notes", noteRoutes);
+app.use("/resources", resourceRoutes);
+
 
 // test route
 app.get("/", (req, res) => {
