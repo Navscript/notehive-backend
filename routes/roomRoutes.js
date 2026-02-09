@@ -3,7 +3,7 @@ const router = express.Router();
 const Room = require("../models/Room");
 
 /**
- * CREATE A ROOM
+ * CREATE ROOM
  * POST /rooms
  */
 router.post("/", async (req, res) => {
@@ -37,6 +37,25 @@ router.get("/", async (req, res) => {
     res.json({ rooms });
   } catch (error) {
     console.error("Fetch rooms error:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * GET SINGLE ROOM BY ID
+ * GET /rooms/:roomId
+ */
+router.get("/:roomId", async (req, res) => {
+  try {
+    const room = await Room.findById(req.params.roomId);
+
+    if (!room) {
+      return res.status(404).json({ error: "Room not found" });
+    }
+
+    res.json({ room });
+  } catch (error) {
+    console.error("Fetch room error:", error);
     res.status(500).json({ error: error.message });
   }
 });
