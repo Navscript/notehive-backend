@@ -1,4 +1,3 @@
-const resourceRoutes = require("./routes/resourceRoutes");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -6,25 +5,31 @@ require("dotenv").config();
 
 const roomRoutes = require("./routes/roomRoutes");
 const noteRoutes = require("./routes/noteRoutes");
+const pdfGenerateRoutes = require("./routes/pdfGenerateRoutes");
 
 const app = express();
 
-// middleware
+// =====================
+// Middleware
+// =====================
 app.use(cors());
 app.use(express.json());
 
-// routes
+// =====================
+// Routes
+// =====================
 app.use("/rooms", roomRoutes);
 app.use("/notes", noteRoutes);
-app.use("/resources", resourceRoutes);
+app.use("/pdf", pdfGenerateRoutes);
 
-
-// test route
+// Test route
 app.get("/", (req, res) => {
   res.send("NoteHive Backend is running");
 });
 
-// 🔴 CONNECT TO MONGODB FIRST, THEN START SERVER
+// =====================
+// Database + Server
+// =====================
 const PORT = process.env.PORT || 5000;
 
 mongoose
@@ -37,5 +42,5 @@ mongoose
     });
   })
   .catch((err) => {
-    console.error("MongoDB connection failed:", err);
+    console.error("MongoDB connection error:", err);
   });
